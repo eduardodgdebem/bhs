@@ -1,0 +1,26 @@
+---
+interface Props {
+  href?: string;
+  variant?: "dark" | "light";
+  size?: "sm" | "md" | "lg";
+  class?: string;
+}
+
+const { href, variant = "dark", size = "md", class: className = "" } = Astro.props;
+const Tag = href ? "a" : "button";
+
+const base = "rounded-full border-2 font-medium transition-colors duration-300";
+const sizes = {
+  sm: "px-6 py-3 text-sm",
+  md: "px-6 py-3 text-lg",
+  lg: "px-8 py-4 text-lg",
+};
+const variants = {
+  dark: "text-accent-dark border-accent-dark hover:bg-accent-dark hover:text-beige-500",
+  light: "text-beige-500 border-current hover:text-white",
+};
+---
+
+<Tag href={href} class:list={[base, sizes[size], variants[variant], className]}>
+  <slot />
+</Tag>

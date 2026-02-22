@@ -1,0 +1,121 @@
+---
+import { Image } from "astro:assets";
+import LogoImg from "../assets/bhs-logo.png";
+import { getLangFromUrl, useTranslations } from "../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<footer id="footer" class="bg-accent-dark">
+  <!-- Main footer content -->
+  <div
+    class="px-8 py-16 max-sm:py-12 flex max-sm:flex-col gap-16 max-sm:gap-10 border-b border-beige-700"
+  >
+    <!-- Logo + tagline -->
+    <div class="flex flex-col gap-5 flex-1 footer-logo">
+      <a href="/" class="h-14 w-fit">
+        <Image
+          src={LogoImg}
+          alt="Brazilian Hair Studio"
+          class="h-full w-full object-contain brightness-0 invert"
+        />
+      </a>
+      <p class="text-beige-700 text-sm leading-relaxed max-w-xs">
+        {t("footer.tagline")}
+      </p>
+    </div>
+
+    <!-- Navigation -->
+    <div class="flex flex-col gap-3 footer-nav">
+      <h4
+        class="text-beige-500 text-xs uppercase tracking-widest font-normal mb-1"
+      >
+        {t("footer.nav.title")}
+      </h4>
+      <a
+        href="/home"
+        class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
+        >{t("nav.home")}</a
+      >
+      <a
+        href="/about"
+        class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
+        >{t("nav.about")}</a
+      >
+      <a
+        href="/services"
+        class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
+        >{t("nav.services")}</a
+      >
+      <a
+        href="/team"
+        class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
+        >{t("nav.team")}</a
+      >
+    </div>
+
+    <!-- Contact -->
+    <div class="flex flex-col gap-3 footer-contact">
+      <h4
+        class="text-beige-500 text-xs uppercase tracking-widest font-normal mb-1"
+      >
+        {t("footer.contact.title")}
+      </h4>
+      <a
+        href="tel:+12393188366"
+        class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
+      >
+        (239) 318-8366
+      </a>
+      <p class="text-beige-700 text-sm">{t("footer.contact.address")}</p>
+      <a
+        href="/appointment"
+        class="mt-3 text-beige-500 px-5 py-2 rounded-full border border-beige-700 text-sm hover:bg-beige-500 hover:text-accent-dark transition-colors duration-300 w-fit"
+      >
+        {t("footer.contact.book")}
+      </a>
+    </div>
+  </div>
+
+  <!-- Bottom bar -->
+  <div
+    class="px-8 py-6 flex max-sm:flex-col gap-4 items-center justify-between footer-bottom"
+  >
+    <p class="text-beige-700 text-xs" style="opacity: 0.5;">
+      &copy; {new Date().getFullYear()} Brazilian Hair Studio. All rights reserved.
+    </p>
+    <p class="text-beige-700 text-xs" style="opacity: 0.5;">
+      {t("footer.est")}
+    </p>
+  </div>
+</footer>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from([".footer-logo", ".footer-nav", ".footer-contact"], {
+    scrollTrigger: {
+      trigger: "#footer",
+      start: "top 85%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power3.out",
+  });
+
+  gsap.from(".footer-bottom", {
+    scrollTrigger: {
+      trigger: ".footer-bottom",
+      start: "top 98%",
+    },
+    opacity: 0,
+    duration: 0.6,
+    ease: "power3.out",
+  });
+</script>

@@ -1,0 +1,98 @@
+@import url("https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900&display=swap");
+
+@import "tailwindcss";
+@config "../../tailwind.config.ts";
+
+@font-face {
+  font-family: "Baskerville Normal";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Baskerville Normal"),
+    url("/fonts/baskvl.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville Regular";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Baskerville Regular"),
+    url("/fonts/baskervi.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville Light-Italic";
+  font-style: italic;
+  font-weight: 300;
+  src:
+    local("Baskerville Light-Italic"),
+    url("/fonts/BASKE10.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville Light";
+  font-style: normal;
+  font-weight: 300;
+  src:
+    local("Baskerville Light"),
+    url("/fonts/BASKE9.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville Bold";
+  font-style: normal;
+  font-weight: bold;
+  src:
+    local("Baskerville Bold"),
+    url("/fonts/BASKE1.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville BT Roman";
+  font-style: normal;
+  font-weight: normal;
+  src:
+    local("Baskerville BT Roman"),
+    url("/fonts/BaskervilleBT.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville BT Italic";
+  font-style: italic;
+  font-weight: normal;
+  src:
+    local("Baskerville BT Italic"),
+    url("/fonts/BaskervilleItalicBT.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville BT Bold";
+  font-style: normal;
+  font-weight: bold;
+  src:
+    local("Baskerville BT Bold"),
+    url("/fonts/BaskervilleBoldBT.woff") format("woff");
+}
+
+@font-face {
+  font-family: "Baskerville BT Bold Italic";
+  font-style: italic;
+  font-weight: bold;
+  src:
+    local("Baskerville BT Bold Italic"),
+    url("/fonts/BaskervilleBoldItalicBT.woff") format("woff");
+}
+
+@layer base {
+  .noise::before {
+    content: "";
+    position: fixed;
+    opacity: 0.7;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100%25' height='100%25'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.3'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+  }
+}
+

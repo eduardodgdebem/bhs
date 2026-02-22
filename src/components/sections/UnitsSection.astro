@@ -1,0 +1,95 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="units-section" class="bg-accent-dark border-b-3 border-accent-dark overflow-hidden">
+  <!-- Header -->
+  <div class="px-8 py-16 max-sm:py-12 border-b border-beige-700 units-header">
+    <h2 class="text-6xl font-light text-beige-500 max-sm:text-4xl">
+      <span class="font-serif italic">{t("units.heading.serif")}</span> {t("units.heading.rest")}
+    </h2>
+  </div>
+
+  <!-- Units grid -->
+  <div class="grid grid-cols-2 max-sm:grid-cols-1 gap-px bg-beige-700">
+
+    <!-- USA Unit -->
+    <div class="units-card bg-accent-dark px-12 py-14 max-sm:px-8 max-sm:py-10 flex flex-col gap-6">
+      <div class="flex flex-col gap-1">
+        <p class="text-beige-700 text-xs uppercase tracking-widest">{t("units.usa.label")}</p>
+        <h3 class="text-4xl font-light text-beige-500">
+          {t("units.usa.city")} <span class="font-serif italic">{t("units.usa.state")}</span>
+        </h3>
+        <p class="text-beige-700 text-sm mt-1">{t("units.usa.country")}</p>
+      </div>
+
+      <div class="w-12 h-px bg-beige-700" />
+
+      <p class="text-beige-700 text-sm leading-relaxed">
+        {t("units.usa.desc")}
+      </p>
+
+      <a
+        href="tel:+12393188366"
+        class="mt-auto text-beige-500 text-sm hover:text-beige-700 transition-colors duration-200"
+      >
+        (239) 318-8366 &rarr;
+      </a>
+    </div>
+
+    <!-- Brazil Units -->
+    <div class="units-card bg-accent-dark px-12 py-14 max-sm:px-8 max-sm:py-10 flex flex-col gap-6">
+      <div class="flex flex-col gap-1">
+        <p class="text-beige-700 text-xs uppercase tracking-widest">{t("units.brazil.label")}</p>
+        <h3 class="text-4xl font-light text-beige-500">
+          {t("units.brazil.city")} <span class="font-serif italic">{t("units.brazil.state")}</span>
+        </h3>
+        <p class="text-beige-700 text-sm mt-1">{t("units.brazil.country")}</p>
+      </div>
+
+      <div class="w-12 h-px bg-beige-700" />
+
+      <p class="text-beige-700 text-sm leading-relaxed">
+        {t("units.brazil.desc")}
+      </p>
+
+      <p class="mt-auto text-beige-700 text-sm">
+        {t("units.brazil.footer")}
+      </p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".units-header", {
+    scrollTrigger: {
+      trigger: "#units-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: -50,
+    duration: 0.9,
+    ease: "power3.out",
+  });
+
+  gsap.from(".units-card", {
+    scrollTrigger: {
+      trigger: "#units-section",
+      start: "top 70%",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out",
+  });
+</script>

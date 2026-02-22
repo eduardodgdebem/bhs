@@ -1,0 +1,68 @@
+---
+import { Image } from "astro:assets";
+import RandomGirl from "../../assets/random-girl.jpg";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section
+  id="about-section"
+  class="flex max-sm:flex-col border-accent-dark border-b-3"
+>
+  <div class="sm:border-r-3 max-sm:border-b-3 about-img overflow-hidden">
+    <Image
+      src={RandomGirl}
+      alt="Random Girl"
+      class="w-full h-full object-cover"
+    />
+  </div>
+  <div
+    class="px-8 py-20 flex flex-col justify-center items-end gap-8 rounded-2xl w-9/12 max-sm:w-full max-sm:items-start max-sm:py-12"
+  >
+    <h2 class="text-4xl about-heading">{t("about.heading")}</h2>
+    <p class="about-text">{t("about.body")}</p>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".about-img", {
+    scrollTrigger: {
+      trigger: "#about-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: -60,
+    duration: 1,
+    ease: "power3.out",
+  });
+
+  gsap.from(".about-heading", {
+    scrollTrigger: {
+      trigger: "#about-section",
+      start: "top 75%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    ease: "power3.out",
+  });
+
+  gsap.from(".about-text", {
+    scrollTrigger: {
+      trigger: "#about-section",
+      start: "top 70%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    delay: 0.2,
+    ease: "power3.out",
+  });
+</script>

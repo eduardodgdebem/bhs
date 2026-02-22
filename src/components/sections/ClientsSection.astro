@@ -1,0 +1,83 @@
+---
+import Button from "../ui/Button.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const testimonials = [
+  { quoteKey: "clients.t1.quote", nameKey: "clients.t1.name", occasionKey: "clients.t1.occasion" },
+  { quoteKey: "clients.t2.quote", nameKey: "clients.t2.name", occasionKey: "clients.t2.occasion" },
+  { quoteKey: "clients.t3.quote", nameKey: "clients.t3.name", occasionKey: "clients.t3.occasion" },
+] as const;
+---
+
+<section id="clients-section" class="border-accent-dark border-b-3 px-8 py-20 max-sm:py-12">
+  <!-- Header -->
+  <div class="flex max-sm:flex-col items-end justify-between gap-8 mb-16 max-sm:mb-10">
+    <h2 class="text-6xl font-light text-accent-dark max-sm:text-4xl clients-heading">
+      <span class="font-serif italic">{t("clients.heading.serif")}</span> {t("clients.heading.rest")}
+    </h2>
+    <Button href="tel:+12393188366" variant="dark" size="sm" class="clients-cta whitespace-nowrap">
+      {t("clients.cta")}
+    </Button>
+  </div>
+
+  <!-- Testimonials -->
+  <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-accent-dark border border-accent-dark">
+    {
+      testimonials.map((t_) => (
+        <div class="testimonial-card bg-beige-500 px-10 py-12 max-sm:px-8 max-sm:py-10 flex flex-col gap-6">
+          <!-- Opening quote mark -->
+          <span class="font-serif italic text-accent-dark leading-none select-none" style="font-size: 5rem; line-height: 1; opacity: 0.15;">&ldquo;</span>
+          <p class="text-accent-dark text-sm leading-relaxed -mt-6">{t(t_.quoteKey)}</p>
+          <div class="mt-auto flex flex-col gap-1 pt-6 border-t border-accent-dark" style="border-color: rgba(14,59,49,0.15);">
+            <p class="text-accent-dark font-medium text-sm">{t(t_.nameKey)}</p>
+            <p class="text-beige-700 text-xs uppercase tracking-widest">{t(t_.occasionKey)}</p>
+          </div>
+        </div>
+      ))
+    }
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".clients-heading", {
+    scrollTrigger: {
+      trigger: "#clients-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: -50,
+    duration: 0.9,
+    ease: "power3.out",
+  });
+
+  gsap.from(".clients-cta", {
+    scrollTrigger: {
+      trigger: "#clients-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: 50,
+    duration: 0.9,
+    ease: "power3.out",
+  });
+
+  gsap.from(".testimonial-card", {
+    scrollTrigger: {
+      trigger: "#clients-section",
+      start: "top 70%",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.8,
+    stagger: 0.2,
+    ease: "power3.out",
+  });
+</script>

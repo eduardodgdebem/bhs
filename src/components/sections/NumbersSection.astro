@@ -1,0 +1,91 @@
+---
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="numbers-section" class="bg-accent-dark border-b-3 border-accent-dark px-8 py-24 max-sm:py-16">
+  <div class="grid grid-cols-4 max-sm:grid-cols-2 gap-12 max-sm:gap-10 max-w-5xl mx-auto">
+
+    <div class="numbers-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none numbers-count"
+          data-target="25"
+        >0</span>
+        <span class="text-4xl max-sm:text-2xl font-serif italic text-beige-500 leading-none mt-2">+</span>
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">{t("numbers.years")}</p>
+    </div>
+
+    <div class="numbers-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none numbers-count"
+          data-target="2000"
+        >0</span>
+        <span class="text-4xl max-sm:text-2xl font-serif italic text-beige-500 leading-none mt-2">+</span>
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">{t("numbers.brides")}</p>
+    </div>
+
+    <div class="numbers-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none numbers-count"
+          data-target="5"
+        >0</span>
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">{t("numbers.units")}</p>
+    </div>
+
+    <div class="numbers-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none numbers-count"
+          data-target="3"
+        >0</span>
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">{t("numbers.specialists")}</p>
+    </div>
+
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".numbers-item", {
+    scrollTrigger: {
+      trigger: "#numbers-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power3.out",
+  });
+
+  document.querySelectorAll<HTMLElement>(".numbers-count").forEach((el) => {
+    const target = parseInt(el.dataset.target ?? "0");
+    const obj = { value: 0 };
+
+    gsap.to(obj, {
+      scrollTrigger: {
+        trigger: "#numbers-section",
+        start: "top 80%",
+      },
+      value: target,
+      duration: 2.5,
+      ease: "power2.out",
+      onUpdate() {
+        el.textContent = Math.floor(obj.value).toLocaleString();
+      },
+    });
+  });
+</script>

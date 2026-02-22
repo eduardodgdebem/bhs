@@ -1,0 +1,54 @@
+---
+import { getImage } from "astro:assets";
+import sunRay from "../../assets/sun-ray.png";
+import Button from "../ui/Button.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const optimizedSunRay = await getImage({ src: sunRay });
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+---
+
+<section id="hero-section" class="w-full h-[calc(100vh-96px)] bg-accent-dark">
+  <div
+    id="sun-ray"
+    class="w-full h-full flex flex-col justify-center items-start px-24 max-sm:px-8 max-sm:py-12 gap-24 max-sm:gap-12"
+    style={`background-image: url('${optimizedSunRay.src}'); background-size: cover; background-position: center;`}
+  >
+    <h1
+      class="text-8xl text-beige-500 font-light w-9/12 max-sm:text-5xl ease-text"
+    >
+      <span class="text text-9xl font-serif italic max-sm:text-6xl"
+        >{t("hero.highlight")}
+      </span>{t("hero.title")}
+    </h1>
+    <Button variant="light">{t("hero.cta")}</Button>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  window.addEventListener("DOMContentLoaded", () => {
+    gsap.from("button", {
+      opacity: 0,
+      scale: 0.8,
+      duration: 1,
+      delay: 0.5,
+      ease: "power3.out",
+    });
+  });
+
+  gsap.fromTo(
+    "#sun-ray",
+    { backgroundSize: "120% 140%" },
+    {
+      backgroundSize: "160% 100%",
+      duration: 6,
+      ease: "sine.inOut",
+      repeat: -1,
+      yoyo: true,
+    },
+  );
+</script>

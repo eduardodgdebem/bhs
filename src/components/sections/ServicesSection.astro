@@ -1,0 +1,112 @@
+---
+import Button from "../ui/Button.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const services = [
+  { num: "01", key: "01", dark: false },
+  { num: "02", key: "02", dark: true },
+  { num: "03", key: "03", dark: true },
+  { num: "04", key: "04", dark: false },
+] as const;
+---
+
+<section id="services-section" class="border-accent-dark border-b-3 overflow-hidden">
+  <div
+    class="px-8 py-16 max-sm:py-12 flex max-sm:flex-col items-end justify-between gap-8 border-accent-dark"
+  >
+    <h2
+      class="text-6xl font-light text-accent-dark max-sm:text-4xl services-heading"
+    >
+      <span class="font-serif italic">{t("services.heading")}</span>
+    </h2>
+    <p class="text-beige-700 max-w-md text-right max-sm:text-left services-desc">
+      {t("services.desc")}
+    </p>
+  </div>
+
+  <div
+    class="grid grid-cols-2 max-sm:grid-cols-1 gap-px bg-accent-dark services-grid"
+  >
+    {
+      services.map((s) => (
+        <div
+          class={`service-card px-12 py-14 max-sm:px-8 max-sm:py-10 flex flex-col gap-5 ${s.dark ? "bg-accent-dark" : "bg-beige-500"}`}
+        >
+          <span
+            class={`text-8xl font-serif italic leading-none select-none ${s.dark ? "text-beige-500" : "text-accent-dark"}`}
+            style="opacity: 0.5;"
+          >
+            {s.num}
+          </span>
+          <h3 class={`text-2xl font-light tracking-wide ${s.dark ? "text-beige-500" : "text-accent-dark"}`}>
+            {t(`services.${s.key}.title`)}
+          </h3>
+          <p class="text-beige-700 leading-relaxed text-sm">
+            {t(`services.${s.key}.desc`)}
+          </p>
+        </div>
+      ))
+    }
+  </div>
+
+  <div class="flex justify-center px-8 py-16 max-sm:py-12 services-cta">
+    <Button href="tel:+12393188366" variant="dark" size="lg">
+      {t("services.cta")}
+    </Button>
+  </div>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".services-heading", {
+    scrollTrigger: {
+      trigger: "#services-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: -50,
+    duration: 0.9,
+    ease: "power3.out",
+  });
+
+  gsap.from(".services-desc", {
+    scrollTrigger: {
+      trigger: "#services-section",
+      start: "top 80%",
+    },
+    opacity: 0,
+    x: 50,
+    duration: 0.9,
+    ease: "power3.out",
+  });
+
+  gsap.from(".service-card", {
+    scrollTrigger: {
+      trigger: ".services-grid",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.7,
+    stagger: 0.15,
+    ease: "power3.out",
+  });
+
+  gsap.from(".services-cta", {
+    scrollTrigger: {
+      trigger: ".services-cta",
+      start: "top 90%",
+    },
+    opacity: 0,
+    scale: 0.9,
+    duration: 0.6,
+    ease: "back.out(1.5)",
+  });
+</script>
