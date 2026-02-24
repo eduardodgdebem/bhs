@@ -66,7 +66,7 @@ const t = useTranslations(lang);
     },
     opacity: 0,
     y: 30,
-    duration: 0.7,
+    duration: 0,
     stagger: 0.15,
     ease: "power3.out",
   });
@@ -81,7 +81,7 @@ const t = useTranslations(lang);
         start: "top 80%",
       },
       value: target,
-      duration: 2.5,
+      duration: 0,
       ease: "power2.out",
       onUpdate() {
         el.textContent = Math.floor(obj.value).toLocaleString();
