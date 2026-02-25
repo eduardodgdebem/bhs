@@ -22,7 +22,7 @@ const members = await reader.collections.team.all();
   </div>
 
   <!-- Cards -->
-  <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-accent-dark border border-accent-dark">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-px bg-accent-dark border border-accent-dark">
     {
       members.map((member) => (
         <div class="team-card bg-beige-500 flex flex-col">

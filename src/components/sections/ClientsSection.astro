@@ -11,7 +11,7 @@ const reader = createReader(process.cwd(), keystaticConfig);
 const testimonials = await reader.collections.clients.all();
 ---
 
-<section id="clients-section" class="border-accent-dark border-b-3 px-8 py-20 max-sm:py-12">
+<section id="clients-section" class="border-accent-dark border-b-3 px-8 py-20 max-w-[100vw] overflow-hidden max-sm:py-12">
   <div class="flex max-sm:flex-col items-end justify-between gap-8 mb-16 max-sm:mb-10">
     <h2 class="text-6xl font-light text-accent-dark max-sm:text-4xl clients-heading">
       <span class="font-serif italic">{t("clients.heading.serif")}</span> {t("clients.heading.rest")}
@@ -21,7 +21,7 @@ const testimonials = await reader.collections.clients.all();
     </Button>
   </div>
 
-  <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-accent-dark border border-accent-dark">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-px bg-accent-dark border border-accent-dark">
     {
       testimonials.map((item) => (
         <div class="testimonial-card bg-beige-500 px-10 py-12 max-sm:px-8 max-sm:py-10 flex flex-col gap-6">
