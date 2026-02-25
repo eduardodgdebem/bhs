@@ -84,7 +84,9 @@
     url("/fonts/BaskervilleBoldItalicBT.woff") format("woff");
 }
 
-@layer base {
+@layer components {
+  .noise {}
+
   .noise::before {
     content: "";
     position: fixed;

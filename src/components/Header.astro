@@ -2,6 +2,7 @@
 import { Image } from "astro:assets";
 import { Icon } from "astro-icon/components";
 import LogoImg from "../assets/bhs-logo.png";
+import LogoSmallImg from "../assets/bhs-logo-small-dark.png"
 import { getLangFromUrl, useTranslations } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
@@ -17,19 +18,20 @@ const langLinks = [
 <header
   class="h-24 flex items-center px-10 text-accent-dark text-xl sticky top-0 bg-beige-500 z-10"
 >
-  <a href="/" class="h-16">
-    <Image src={LogoImg} alt="Brazilian Hair Studio" class="h-full w-full object-contain" />
+  <a href="/" class="h-16 flex gap-2">
+    <Image src={LogoSmallImg} alt="Brazilian Hair Studio" class="h-full w-full object-contain" />
+    <Image src={LogoImg} alt="Brazilian Hair Studio" class="max-sm:hidden h-full w-full object-contain" />
   </a>
 
-  <!-- Desktop nav -->
   <nav class="hidden md:flex items-center gap-4 ml-auto">
     <a href="/home">{t("nav.home")}</a>
     <a href="/about">{t("nav.about")}</a>
     <a href="/services">{t("nav.services")}</a>
     <a href="/team">{t("nav.team")}</a>
-    <a href="/appointment">{t("nav.book")}</a>
+    <a href="/appointment" class="flex items-center gap-2">
+      <Icon name="material-symbols-light:phone-enabled" />
+      {t("nav.book")}</a>
 
-    <!-- Language switcher -->
     <div class="flex items-center gap-2 ml-4 pl-4 border-l border-accent-dark/20 text-sm">
       {
         langLinks.map((l, i) => (
@@ -51,7 +53,6 @@ const langLinks = [
     </div>
   </nav>
 
-  <!-- Mobile hamburger button -->
   <button
     id="menu-toggle"
     class="md:hidden ml-auto p-2"
@@ -68,7 +69,6 @@ const langLinks = [
   </button>
 </header>
 
-<!-- Mobile nav -->
 <nav
   id="mobile-menu"
   class="md:hidden hidden flex-col bg-beige-500 text-accent-dark text-xl px-10 py-6 gap-6 sticky top-24 z-10"
@@ -79,7 +79,6 @@ const langLinks = [
   <a href="/team">{t("nav.team")}</a>
   <a href="/appointment">{t("nav.book")}</a>
 
-  <!-- Language switcher (mobile) -->
   <div class="flex items-center gap-3 pt-4 border-t border-accent-dark/20 text-base">
     {
       langLinks.map((l, i) => (

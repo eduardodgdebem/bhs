@@ -1,17 +1,16 @@
 ---
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const members = [
-  { initials: "MB", name: "Mirela De Bem", experience: "25 years", roleKey: "team.mb.role", bioKey: "team.mb.bio" },
-  { initials: "GS", name: "Gezi Silva",    experience: "8 years",  roleKey: "team.gs.role", bioKey: "team.gs.bio" },
-  { initials: "FA", name: "Francieli Asmin", experience: "9 years", roleKey: "team.fa.role", bioKey: "team.fa.bio" },
-] as const;
+const reader = createReader(process.cwd(), keystaticConfig);
+const members = await reader.collections.team.all();
 ---
 
-<section id="team-section" class="border-accent-dark border-b-3 px-8 py-20 max-sm:py-12">
+<section id="team-section" class="border-accent-dark border-b-3 px-8 py-20 max-w-[100vw] overflow-hidden max-sm:py-12">
   <!-- Header -->
   <div class="flex max-sm:flex-col items-end justify-between gap-8 mb-16 max-sm:mb-10">
     <h2 class="text-6xl font-light text-accent-dark max-sm:text-4xl team-heading">
@@ -23,26 +22,30 @@ const members = [
   </div>
 
   <!-- Cards -->
-  <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-accent-dark border border-accent-dark">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-px bg-accent-dark border border-accent-dark">
     {
       members.map((member) => (
         <div class="team-card bg-beige-500 flex flex-col">
           <!-- Initials placeholder -->
           <div class="bg-accent-dark aspect-square flex items-center justify-center">
             <span class="font-serif italic text-beige-500 select-none" style="font-size: clamp(4rem, 10vw, 8rem); opacity: 0.35;">
-              {member.initials}
+              {member.entry.initials}
             </span>
           </div>
           <!-- Info -->
           <div class="px-8 py-8 flex flex-col gap-3 flex-1">
             <div>
-              <h3 class="text-xl font-light text-accent-dark">{member.name}</h3>
-              <p class="text-xs uppercase tracking-widest text-beige-700 mt-1">{t(member.roleKey)}</p>
+              <h3 class="text-xl font-light text-accent-dark">{member.entry.name}</h3>
+              <p class="text-xs uppercase tracking-widest text-beige-700 mt-1">
+                {member.entry[`role_${lang}` as keyof typeof member.entry]}
+              </p>
             </div>
             <div class="w-8 h-px bg-accent-dark opacity-30" />
-            <p class="text-sm text-beige-700 leading-relaxed">{t(member.bioKey)}</p>
+            <p class="text-sm text-beige-700 leading-relaxed">
+              {member.entry[`bio_${lang}` as keyof typeof member.entry]}
+            </p>
             <p class="text-xs text-beige-700 mt-auto pt-4 uppercase tracking-widest">
-              {member.experience} {t("team.experience")}
+              {member.entry.experience} {t("team.experience")}
             </p>
           </div>
         </div>

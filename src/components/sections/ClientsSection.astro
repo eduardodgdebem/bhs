@@ -1,19 +1,17 @@
 ---
 import Button from "../ui/Button.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const testimonials = [
-  { quoteKey: "clients.t1.quote", nameKey: "clients.t1.name", occasionKey: "clients.t1.occasion" },
-  { quoteKey: "clients.t2.quote", nameKey: "clients.t2.name", occasionKey: "clients.t2.occasion" },
-  { quoteKey: "clients.t3.quote", nameKey: "clients.t3.name", occasionKey: "clients.t3.occasion" },
-] as const;
+const reader = createReader(process.cwd(), keystaticConfig);
+const testimonials = await reader.collections.clients.all();
 ---
 
-<section id="clients-section" class="border-accent-dark border-b-3 px-8 py-20 max-sm:py-12">
-  <!-- Header -->
+<section id="clients-section" class="border-accent-dark border-b-3 px-8 py-20 max-w-[100vw] overflow-hidden max-sm:py-12">
   <div class="flex max-sm:flex-col items-end justify-between gap-8 mb-16 max-sm:mb-10">
     <h2 class="text-6xl font-light text-accent-dark max-sm:text-4xl clients-heading">
       <span class="font-serif italic">{t("clients.heading.serif")}</span> {t("clients.heading.rest")}
@@ -23,17 +21,19 @@ const testimonials = [
     </Button>
   </div>
 
-  <!-- Testimonials -->
-  <div class="grid grid-cols-3 max-sm:grid-cols-1 gap-px bg-accent-dark border border-accent-dark">
+  <div class="grid grid-cols-[repeat(auto-fit,minmax(min(100%,18rem),1fr))] gap-px bg-accent-dark border border-accent-dark">
     {
-      testimonials.map((t_) => (
+      testimonials.map((item) => (
         <div class="testimonial-card bg-beige-500 px-10 py-12 max-sm:px-8 max-sm:py-10 flex flex-col gap-6">
-          <!-- Opening quote mark -->
           <span class="font-serif italic text-accent-dark leading-none select-none" style="font-size: 5rem; line-height: 1; opacity: 0.15;">&ldquo;</span>
-          <p class="text-accent-dark text-sm leading-relaxed -mt-6">{t(t_.quoteKey)}</p>
+          <p class="text-accent-dark text-sm leading-relaxed -mt-6">
+            {item.entry[`quote_${lang}` as keyof typeof item.entry]}
+          </p>
           <div class="mt-auto flex flex-col gap-1 pt-6 border-t border-accent-dark" style="border-color: rgba(14,59,49,0.15);">
-            <p class="text-accent-dark font-medium text-sm">{t(t_.nameKey)}</p>
-            <p class="text-beige-700 text-xs uppercase tracking-widest">{t(t_.occasionKey)}</p>
+            <p class="text-accent-dark font-medium text-sm">{item.entry.name}</p>
+            <p class="text-beige-700 text-xs uppercase tracking-widest">
+              {item.entry[`occasion_${lang}` as keyof typeof item.entry]}
+            </p>
           </div>
         </div>
       ))

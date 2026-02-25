@@ -1,16 +1,15 @@
 ---
 import Button from "../ui/Button.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
-const services = [
-  { num: "01", key: "01", dark: false },
-  { num: "02", key: "02", dark: true },
-  { num: "03", key: "03", dark: true },
-  { num: "04", key: "04", dark: false },
-] as const;
+const reader = createReader(process.cwd(), keystaticConfig);
+const allServices = await reader.collections.services.all();
+const services = allServices.sort((a, b) => (a.entry.order ?? '').localeCompare(b.entry.order ?? ''));
 ---
 
 <section id="services-section" class="border-accent-dark border-b-3 overflow-hidden">
@@ -33,19 +32,19 @@ const services = [
     {
       services.map((s) => (
         <div
-          class={`service-card px-12 py-14 max-sm:px-8 max-sm:py-10 flex flex-col gap-5 ${s.dark ? "bg-accent-dark" : "bg-beige-500"}`}
+          class={`service-card px-12 py-14 max-sm:px-8 max-sm:py-10 flex flex-col gap-5 ${s.entry.dark ? "bg-accent-dark" : "bg-beige-500"}`}
         >
           <span
-            class={`text-8xl font-serif italic leading-none select-none ${s.dark ? "text-beige-500" : "text-accent-dark"}`}
+            class={`text-8xl font-serif italic leading-none select-none ${s.entry.dark ? "text-beige-500" : "text-accent-dark"}`}
             style="opacity: 0.5;"
           >
-            {s.num}
+            {s.entry.order}
           </span>
-          <h3 class={`text-2xl font-light tracking-wide ${s.dark ? "text-beige-500" : "text-accent-dark"}`}>
-            {t(`services.${s.key}.title`)}
+          <h3 class={`text-2xl font-light tracking-wide ${s.entry.dark ? "text-beige-500" : "text-accent-dark"}`}>
+            {s.entry[`title_${lang}` as keyof typeof s.entry]}
           </h3>
           <p class="text-beige-700 leading-relaxed text-sm">
-            {t(`services.${s.key}.desc`)}
+            {s.entry[`desc_${lang}` as keyof typeof s.entry]}
           </p>
         </div>
       ))
