@@ -25,6 +25,14 @@ export const ui: Record<keyof typeof languages, any> = {
     "about.body":
       "We are a company with more than 25 years of experience, with four units in Brazil and now the first unit in the USA. Our purpose is to raise your self-esteem and bring out the best in you! We are specialists in hair transformation using the techniques of visagism and personal coloring. In our history we have already assisted more than 2000 brides in our four units with the Bridal Day, both in the salon and in other environments of your choice, such as beaches, hotels, castles, and fields. In our salon you have beauty services for your entire family. Female Production, Male Production, Baby's First Haircut with certificate, Sweet Sixteen, Bride and Bridesmaids Day Production, Eyebrow Services, Eyelash Extension, Microblading, Manicure, Pedicure and Foot Spa among others. We are ready and happy to receive you in our salon, where you will get to know our services and techniques, providing you with an unforgettable experience.",
 
+    // About Us (page)
+    "aboutus.heading": "About Us",
+    "aboutus.subtitle": "Our history of transforming beauty since 1999",
+    "aboutus.stats.clients": "clients served",
+    "aboutus.stats.new": "new clients in 2021",
+    "aboutus.stats.professionals": "professionals",
+    "aboutus.cta": "Book your appointment",
+
     // Numbers
     "numbers.years": "years of experience",
     "numbers.brides": "brides served",
@@ -127,6 +135,14 @@ export const ui: Record<keyof typeof languages, any> = {
     "about.body":
       "Somos uma empresa com mais de 25 anos de experiência, com quatro unidades no Brasil e agora a primeira unidade nos EUA. Nosso propósito é elevar sua autoestima e revelar o melhor em você! Somos especialistas em transformação capilar utilizando as técnicas de visagismo e colorimetria pessoal. Em nossa história, já atendemos mais de 2000 noivas em nossas quatro unidades com o Dia da Noiva, tanto no salão quanto em outros ambientes de sua escolha, como praias, hotéis, castelos e campos. Em nosso salão você conta com serviços de beleza para toda a família. Produção Feminina, Produção Masculina, Primeiro Corte do Bebê com certificado, Debutante, Produção de Noiva e Madrinhas, Serviços de Sobrancelha, Extensão de Cílios, Microblading, Manicure, Pedicure e Foot Spa entre outros. Estamos prontos e felizes em recebê-la em nosso salão, onde você conhecerá nossos serviços e técnicas, proporcionando uma experiência inesquecível.",
 
+    // About Us (page)
+    "aboutus.heading": "Sobre Nós",
+    "aboutus.subtitle": "Nossa história de transformar a beleza desde 1999",
+    "aboutus.stats.clients": "clientes atendidos",
+    "aboutus.stats.new": "novos clientes em 2021",
+    "aboutus.stats.professionals": "profissionais",
+    "aboutus.cta": "Agende seu horário",
+
     // Numbers
     "numbers.years": "anos de experiência",
     "numbers.brides": "noivas atendidas",
@@ -228,6 +244,14 @@ export const ui: Record<keyof typeof languages, any> = {
     "about.heading": "¡Nos enfocamos en lo mejor para ti!",
     "about.body":
       "Somos una empresa con más de 25 años de experiencia, con cuatro unidades en Brasil y ahora la primera unidad en EE.UU. Nuestro propósito es elevar tu autoestima y sacar lo mejor de ti. Somos especialistas en transformación capilar utilizando las técnicas de visagismo y colorimetría personal. En nuestra historia ya hemos atendido a más de 2000 novias en nuestras cuatro unidades con el Día de la Novia, tanto en el salón como en otros entornos de tu elección, como playas, hoteles, castillos y campos. En nuestro salón tienes servicios de belleza para toda la familia. Producción Femenina, Producción Masculina, Primer Corte del Bebé con certificado, Quinceañera, Producción de Novia y Damas de Honor, Servicios de Cejas, Extensión de Pestañas, Microblading, Manicure, Pedicure y Foot Spa entre otros. Estamos listos y felices de recibirte en nuestro salón, donde conocerás nuestros servicios y técnicas, brindándote una experiencia inolvidable.",
+
+    // About Us (page)
+    "aboutus.heading": "Sobre Nosotros",
+    "aboutus.subtitle": "Nuestra historia de transformar la belleza desde 1999",
+    "aboutus.stats.clients": "clientes atendidos",
+    "aboutus.stats.new": "nuevos clientes en 2021",
+    "aboutus.stats.professionals": "profesionales",
+    "aboutus.cta": "Reserva tu cita",
 
     // Numbers
     "numbers.years": "años de experiencia",
