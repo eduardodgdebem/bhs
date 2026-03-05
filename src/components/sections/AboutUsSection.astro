@@ -1,5 +1,6 @@
 ---
 import Button from "../ui/Button.astro";
+import PageHero from "../ui/PageHero.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 import { createReader } from "@keystatic/core/reader";
 import keystaticConfig from "../../../keystatic.config";
@@ -12,49 +13,69 @@ const allHistory = await reader.collections.history.all();
 const milestones = allHistory.sort((a, b) =>
   (a.entry.year ?? "").localeCompare(b.entry.year ?? "")
 );
+
+const pullQuotes = {
+  en: "More than 25 years transforming beauty — one client at a time.",
+  pt: "Mais de 25 anos transformando a beleza — uma cliente de cada vez.",
+  sp: "Más de 25 años transformando la belleza — un cliente a la vez.",
+};
+const pullQuote = pullQuotes[lang];
 ---
 
-<!-- Hero header -->
-<section
+<PageHero
   id="aboutus-hero"
-  class="bg-accent-dark border-b-3 border-accent-dark px-8 py-28 max-sm:py-20 text-center"
->
-  <h1
-    class="text-6xl max-sm:text-4xl font-serif italic text-beige-500 aboutus-heading"
-  >
-    {t("aboutus.heading")}
-  </h1>
-  <p class="text-beige-700 mt-4 text-lg max-w-xl mx-auto aboutus-subtitle">
-    {t("aboutus.subtitle")}
-  </p>
-</section>
+  bgText="Since 1999"
+  eyebrow="Brazilian Hair Studio · Est. 1999"
+  heading={t("aboutus.heading")}
+  subtitle={t("aboutus.subtitle")}
+/>
 
 <!-- Timeline -->
-<section id="aboutus-timeline" class="border-b-3 border-accent-dark">
+<section id="aboutus-timeline" class="border-b-3 border-accent-dark max-w-screen overflow-hidden">
   {
     milestones.map((m, i) => {
       const isEven = i % 2 === 0;
+      const title = m.entry[`title_${lang}` as keyof typeof m.entry] as string;
+      const desc = m.entry[`desc_${lang}` as keyof typeof m.entry] as string;
+      const image = m.entry.image as string | null | undefined;
+
       return (
         <div
-          class={`timeline-item flex max-sm:flex-col border-b-3 border-accent-dark last:border-b-0 ${isEven ? "" : "sm:flex-row-reverse"}`}
+          class={`timeline-item grid sm:grid-cols-12 max-sm:grid-cols-1 border-b-3 border-accent-dark last:border-b-0`}
         >
-          {/* Year column */}
+          {/* Image column */}
           <div
-            class={`sm:w-4/12 px-8 py-16 max-sm:py-10 flex flex-col justify-center items-center bg-accent-dark ${isEven ? "sm:border-r-3" : "sm:border-l-3"} border-accent-dark`}
+            class={`relative sm:col-span-5 min-h-72 max-sm:min-h-52 overflow-hidden timeline-img ${isEven ? "sm:order-1" : "sm:order-2"}`}
           >
-            <span class="text-8xl max-sm:text-6xl font-serif italic text-beige-500 leading-none">
-              {m.entry.year}
-            </span>
+            {image ? (
+              <div class="w-full h-full absolute inset-0">
+                <img
+                  src={image}
+                  alt={title}
+                  class="w-full h-full object-cover"
+                />
+                <div class="absolute inset-0 bg-accent-dark/40" />
+              </div>
+            ) : (
+              <div class="w-full h-full min-h-72 max-sm:min-h-52 bg-accent-dark/5 border-r border-dashed border-accent-dark/20 flex items-center justify-center">
+                <span class="text-[9rem] max-sm:text-[6rem] font-serif italic text-accent-dark/10 leading-none select-none">
+                  {m.entry.year}
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Content column */}
-          <div class="sm:w-8/12 px-12 py-16 max-sm:px-8 max-sm:py-10 flex flex-col justify-center gap-4">
+          <div
+            class={`sm:col-span-7 px-12 py-16 max-sm:px-8 max-sm:py-10 flex flex-col justify-center gap-5 timeline-content ${isEven ? "sm:order-2" : "sm:order-1"}`}
+          >
+            <span class="inline-block self-start text-xs font-sans uppercase tracking-widest bg-accent-dark text-beige-500 px-3 py-1">
+              {m.entry.year}
+            </span>
             <h3 class="text-3xl max-sm:text-2xl font-light text-accent-dark">
-              {m.entry[`title_${lang}` as keyof typeof m.entry]}
+              {title}
             </h3>
-            <p class="text-beige-700 leading-relaxed">
-              {m.entry[`desc_${lang}` as keyof typeof m.entry]}
-            </p>
+            <p class="text-beige-700 leading-relaxed">{desc}</p>
           </div>
         </div>
       );
@@ -67,40 +88,39 @@ const milestones = allHistory.sort((a, b) =>
   id="aboutus-stats"
   class="bg-accent-dark border-b-3 border-accent-dark px-8 py-24 max-sm:py-16"
 >
+  <p
+    class="text-center text-beige-700 text-xs uppercase tracking-[0.25em] mb-14 max-sm:mb-10"
+  >
+    2021 — across all four units
+  </p>
   <div
     class="grid grid-cols-3 max-sm:grid-cols-1 gap-12 max-sm:gap-10 max-w-4xl mx-auto"
   >
     <div class="stat-item flex flex-col items-center text-center gap-3">
-      <div class="flex items-start gap-1">
-        <span
-          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
-          data-target="23006">0</span
-        >
-      </div>
+      <span
+        class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+        data-target="23006">0</span
+      >
       <p class="text-beige-700 text-xs uppercase tracking-widest">
         {t("aboutus.stats.clients")}
       </p>
     </div>
 
     <div class="stat-item flex flex-col items-center text-center gap-3">
-      <div class="flex items-start gap-1">
-        <span
-          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
-          data-target="4299">0</span
-        >
-      </div>
+      <span
+        class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+        data-target="4299">0</span
+      >
       <p class="text-beige-700 text-xs uppercase tracking-widest">
         {t("aboutus.stats.new")}
       </p>
     </div>
 
     <div class="stat-item flex flex-col items-center text-center gap-3">
-      <div class="flex items-start gap-1">
-        <span
-          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
-          data-target="54">0</span
-        >
-      </div>
+      <span
+        class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+        data-target="54">0</span
+      >
       <p class="text-beige-700 text-xs uppercase tracking-widest">
         {t("aboutus.stats.professionals")}
       </p>
@@ -109,7 +129,12 @@ const milestones = allHistory.sort((a, b) =>
 </section>
 
 <!-- CTA -->
-<section class="px-8 py-20 max-sm:py-14 flex justify-center aboutus-cta">
+<section
+  class="bg-beige-500 px-8 py-24 max-sm:py-16 flex flex-col items-center gap-8 aboutus-cta"
+>
+  <p class="font-serif italic text-2xl max-sm:text-xl text-accent-dark text-center max-w-lg leading-snug">
+    {pullQuote}
+  </p>
   <Button href="tel:+12393188366" variant="dark" size="lg">
     {t("aboutus.cta")} &rarr; (239) 318-8366
   </Button>
@@ -121,71 +146,80 @@ const milestones = allHistory.sort((a, b) =>
 
   gsap.registerPlugin(ScrollTrigger);
 
-  gsap.from(".aboutus-heading", {
-    opacity: 0,
-    y: 40,
-    duration: 1,
-    ease: "power3.out",
-  });
+  window.addEventListener("load", () => {
+    // Timeline rows — image slides from its side, content fades up
+    document.querySelectorAll<HTMLElement>(".timeline-item").forEach((row, i) => {
+      const img = row.querySelector(".timeline-img");
+      const content = row.querySelector(".timeline-content");
+      const isEven = i % 2 === 0;
 
-  gsap.from(".aboutus-subtitle", {
-    opacity: 0,
-    y: 30,
-    duration: 0.8,
-    delay: 0.2,
-    ease: "power3.out",
-  });
+      if (img) {
+        gsap.from(img, {
+          scrollTrigger: { trigger: row, start: "top 90%" },
+          opacity: 0,
+          x: isEven ? -60 : 60,
+          duration: 0.9,
+          ease: "power3.out",
+        });
+      }
 
-  gsap.from(".timeline-item", {
-    scrollTrigger: {
-      trigger: "#aboutus-timeline",
-      start: "top 80%",
-    },
-    opacity: 0,
-    y: 50,
-    duration: 0.7,
-    stagger: 0.2,
-    ease: "power3.out",
-  });
+      if (content) {
+        gsap.from(content, {
+          scrollTrigger: { trigger: row, start: "top 90%" },
+          opacity: 0,
+          y: 40,
+          duration: 0.8,
+          delay: 0.15,
+          ease: "power3.out",
+        });
+      }
+    });
 
-  gsap.from(".stat-item", {
-    scrollTrigger: {
-      trigger: "#aboutus-stats",
-      start: "top 80%",
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0,
-    stagger: 0.15,
-    ease: "power3.out",
-  });
-
-  document.querySelectorAll<HTMLElement>(".stat-count").forEach((el) => {
-    const target = parseInt(el.dataset.target ?? "0");
-    const obj = { value: 0 };
-
-    gsap.to(obj, {
+    // Stats — fade in items
+    gsap.from(".stat-item", {
       scrollTrigger: {
         trigger: "#aboutus-stats",
-        start: "top 80%",
+        start: "top 90%",
       },
-      value: target,
-      duration: 0,
-      ease: "power2.out",
-      onUpdate() {
-        el.textContent = Math.floor(obj.value).toLocaleString();
-      },
+      opacity: 0,
+      y: 30,
+      duration: 0.7,
+      stagger: 0.15,
+      ease: "power3.out",
     });
-  });
 
-  gsap.from(".aboutus-cta", {
-    scrollTrigger: {
-      trigger: ".aboutus-cta",
-      start: "top 90%",
-    },
-    opacity: 0,
-    scale: 0.9,
-    duration: 0.6,
-    ease: "back.out(1.5)",
+    // Stats — count-up animation
+    document.querySelectorAll<HTMLElement>(".stat-count").forEach((el) => {
+      const target = parseInt(el.dataset.target ?? "0");
+      const obj = { value: 0 };
+
+      gsap.to(obj, {
+        scrollTrigger: {
+          trigger: "#aboutus-stats",
+          start: "top 90%",
+        },
+        value: target,
+        duration: 2,
+        ease: "power2.out",
+        onUpdate() {
+          el.textContent = Math.floor(obj.value).toLocaleString();
+        },
+      });
+    });
+
+    // CTA — scale-up entrance
+    gsap.from(".aboutus-cta", {
+      scrollTrigger: {
+        trigger: ".aboutus-cta",
+        start: "top 95%",
+      },
+      opacity: 0,
+      scale: 0.97,
+      duration: 0.7,
+      ease: "power3.out",
+    });
+
+    // Recalculate all trigger positions after full layout paint
+    ScrollTrigger.refresh();
   });
 </script>

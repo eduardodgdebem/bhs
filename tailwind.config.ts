@@ -15,6 +15,7 @@ const config: Config = {
     extend: {
       colors: {
         beige: {
+          300: "#f5f4f0",
           500: "#edebdf",
           700: "#686464",
         },

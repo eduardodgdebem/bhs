@@ -133,6 +133,11 @@ export default config({
         desc_en: fields.text({ label: 'Descrição (EN)' }),
         desc_pt: fields.text({ label: 'Descrição (PT)' }),
         desc_sp: fields.text({ label: 'Descrição (ES)' }),
+        image: fields.image({
+          label: 'Foto da unidade',
+          directory: 'public/images/history',
+          publicPath: '/images/history/',
+        }),
       },
     }),
 

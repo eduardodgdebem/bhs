@@ -1,7 +1,7 @@
 ---
 import { Image } from "astro:assets";
 import LogoImg from "../assets/bhs-logo.png";
-import { getLangFromUrl, useTranslations } from "../i18n/utils";
+import { getLangFromUrl, useTranslations, localePath } from "../i18n/utils";
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
@@ -14,7 +14,7 @@ const t = useTranslations(lang);
   >
     <!-- Logo + tagline -->
     <div class="flex flex-col gap-5 flex-1 footer-logo">
-      <a href="/" class="h-14 w-fit">
+      <a href={localePath(lang, "/")} class="h-14 w-fit">
         <Image
           src={LogoImg}
           alt="Brazilian Hair Studio"
@@ -34,22 +34,22 @@ const t = useTranslations(lang);
         {t("footer.nav.title")}
       </h4>
       <a
-        href="/home"
+        href={localePath(lang, "/home")}
         class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
         >{t("nav.home")}</a
       >
       <a
-        href="/about"
+        href={localePath(lang, "/about")}
         class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
         >{t("nav.about")}</a
       >
       <a
-        href="/services"
+        href={localePath(lang, "/services")}
         class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
         >{t("nav.services")}</a
       >
       <a
-        href="/team"
+        href={localePath(lang, "/team")}
         class="text-beige-700 hover:text-beige-500 transition-colors duration-200 text-sm"
         >{t("nav.team")}</a
       >
@@ -70,7 +70,7 @@ const t = useTranslations(lang);
       </a>
       <p class="text-beige-700 text-sm">{t("footer.contact.address")}</p>
       <a
-        href="/appointment"
+        href={localePath(lang, "/appointment")}
         class="mt-3 text-beige-500 px-5 py-2 rounded-full border border-beige-700 text-sm hover:bg-beige-500 hover:text-accent-dark transition-colors duration-300 w-fit"
       >
         {t("footer.contact.book")}
