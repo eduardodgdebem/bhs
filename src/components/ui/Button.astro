@@ -1,26 +1,64 @@
 ---
+import { Icon } from "astro-icon/components";
+
 interface Props {
   href?: string;
   variant?: "dark" | "light";
   size?: "sm" | "md" | "lg";
+  icon?: string;
   class?: string;
 }
 
-const { href, variant = "dark", size = "md", class: className = "" } = Astro.props;
+const { href, variant = "dark", size = "md", icon, class: className = "" } = Astro.props;
 const Tag = href ? "a" : "button";
 
-const base = "rounded-full border-2 font-medium transition-colors duration-300";
+const base = "btn rounded-full border-2 font-medium relative overflow-hidden";
 const sizes = {
   sm: "px-6 py-3 text-sm",
   md: "px-6 py-3 text-lg",
   lg: "px-8 py-4 text-lg",
 };
 const variants = {
-  dark: "text-accent-dark border-accent-dark hover:bg-accent-dark hover:text-beige-500",
-  light: "text-beige-500 border-current hover:text-white",
+  dark: "btn-dark text-accent-dark border-accent-dark",
+  light: "btn-light text-beige-500 border-current",
 };
 ---
 
 <Tag href={href} class:list={[base, sizes[size], variants[variant], className]}>
-  <slot />
+  <span class="relative z-10 transition-colors duration-300 flex items-center gap-2">
+    <slot />
+    {icon && <Icon name={icon} class="w-5 h-5" />}
+  </span>
 </Tag>
+
+<style>
+  .btn::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 0;
+  }
+
+  .btn:hover::before {
+    transform: scaleX(1);
+  }
+
+  .btn-dark::before {
+    background-color: #0e3b31; /* accent-dark */
+  }
+
+  .btn-dark:hover span {
+    color: #edebdf; /* beige-500 */
+  }
+
+  .btn-light::before {
+    background-color: #edebdf; /* beige-500 */
+  }
+
+  .btn-light:hover span {
+    color: #0e3b31; /* accent-dark */
+  }
+</style>
