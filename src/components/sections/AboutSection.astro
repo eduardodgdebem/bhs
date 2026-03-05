@@ -9,20 +9,33 @@ const t = useTranslations(lang);
 
 <section
   id="about-section"
-  class="flex max-sm:flex-col border-accent-dark border-b-3"
+  class="flex max-sm:flex-col border-accent-dark border-b-3 max-h-screen"
 >
-  <div class="sm:border-r-3 max-sm:border-b-3 about-img overflow-hidden">
+  <!-- Image -->
+  <div class="sm:w-5/12 sm:border-r-3 max-sm:border-b-3 border-accent-dark about-img overflow-hidden relative">
     <Image
       src={RandomGirl}
-      alt="Random Girl"
-      class="w-full h-full object-cover"
+      alt="Brazilian Hair Studio"
+      class="w-full h-full object-cover object-center"
+      loading="lazy"
     />
+    <div class="absolute inset-0 bg-linear-to-t from-accent-dark/30 to-transparent pointer-events-none"></div>
   </div>
-  <div
-    class="px-8 py-20 flex flex-col justify-center items-end gap-8 rounded-2xl w-9/12 max-sm:w-full max-sm:items-start max-sm:py-12"
-  >
-    <h2 class="text-4xl about-heading">{t("about.heading")}</h2>
-    <p class="about-text">{t("about.body")}</p>
+
+  <!-- Content -->
+  <div class="sm:w-7/12 px-14 py-20 max-sm:px-8 max-sm:py-14 flex flex-col justify-center gap-8 bg-beige-500">
+    <div class="about-eyebrow flex items-center gap-4">
+      <span class="block w-10 h-px bg-accent-dark opacity-50"></span>
+      <span class="text-xs uppercase tracking-[0.2em] text-accent-dark/60 font-sans">Brazilian Hair Studio</span>
+    </div>
+
+    <h2 class="about-heading text-4xl max-sm:text-3xl font-serif italic text-accent-dark leading-tight">
+      {t("about.heading")}
+    </h2>
+
+    <p class="about-text text-beige-700 leading-relaxed text-[0.95rem] max-w-prose">
+      {t("about.body")}
+    </p>
   </div>
 </section>
 
@@ -43,7 +56,7 @@ const t = useTranslations(lang);
     ease: "power3.out",
   });
 
-  gsap.from(".about-heading", {
+  gsap.from([".about-eyebrow", ".about-heading", ".about-text"], {
     scrollTrigger: {
       trigger: "#about-section",
       start: "top 75%",
@@ -51,18 +64,7 @@ const t = useTranslations(lang);
     opacity: 0,
     y: 30,
     duration: 0.8,
-    ease: "power3.out",
-  });
-
-  gsap.from(".about-text", {
-    scrollTrigger: {
-      trigger: "#about-section",
-      start: "top 70%",
-    },
-    opacity: 0,
-    y: 30,
-    duration: 0.8,
-    delay: 0.2,
+    stagger: 0.15,
     ease: "power3.out",
   });
 </script>

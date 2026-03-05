@@ -16,7 +16,7 @@ const lang = getLangFromUrl(Astro.url);
     <meta name="generator" content={Astro.generator} />
     <title>Brazilian Hair Studio</title>
   </head>
-  <body class="bg-beige-500">
+  <body class="bg-beige-500 pt-24">
     <Header />
     <slot />
     <Footer />
@@ -31,3 +31,24 @@ const lang = getLangFromUrl(Astro.url);
     height: 100%;
   }
 </style>
+
+<script>
+  import Lenis from "lenis";
+
+  const lenis = new Lenis({
+    duration: 1.2,
+    easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+    smoothWheel: true,
+  });
+
+  lenis.on("scroll", ({ scroll }: { scroll: number }) => {
+    window.dispatchEvent(new CustomEvent("lenis-scroll", { detail: { scroll } }));
+  });
+
+  function raf(time: number) {
+    lenis.raf(time);
+    requestAnimationFrame(raf);
+  }
+
+  requestAnimationFrame(raf);
+</script>
