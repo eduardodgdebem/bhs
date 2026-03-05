@@ -1,0 +1,191 @@
+---
+import Button from "../ui/Button.astro";
+import { getLangFromUrl, useTranslations } from "../../i18n/utils";
+import { createReader } from "@keystatic/core/reader";
+import keystaticConfig from "../../../keystatic.config";
+
+const lang = getLangFromUrl(Astro.url);
+const t = useTranslations(lang);
+
+const reader = createReader(process.cwd(), keystaticConfig);
+const allHistory = await reader.collections.history.all();
+const milestones = allHistory.sort((a, b) =>
+  (a.entry.year ?? "").localeCompare(b.entry.year ?? "")
+);
+---
+
+<!-- Hero header -->
+<section
+  id="aboutus-hero"
+  class="bg-accent-dark border-b-3 border-accent-dark px-8 py-28 max-sm:py-20 text-center"
+>
+  <h1
+    class="text-6xl max-sm:text-4xl font-serif italic text-beige-500 aboutus-heading"
+  >
+    {t("aboutus.heading")}
+  </h1>
+  <p class="text-beige-700 mt-4 text-lg max-w-xl mx-auto aboutus-subtitle">
+    {t("aboutus.subtitle")}
+  </p>
+</section>
+
+<!-- Timeline -->
+<section id="aboutus-timeline" class="border-b-3 border-accent-dark">
+  {
+    milestones.map((m, i) => {
+      const isEven = i % 2 === 0;
+      return (
+        <div
+          class={`timeline-item flex max-sm:flex-col border-b-3 border-accent-dark last:border-b-0 ${isEven ? "" : "sm:flex-row-reverse"}`}
+        >
+          {/* Year column */}
+          <div
+            class={`sm:w-4/12 px-8 py-16 max-sm:py-10 flex flex-col justify-center items-center bg-accent-dark ${isEven ? "sm:border-r-3" : "sm:border-l-3"} border-accent-dark`}
+          >
+            <span class="text-8xl max-sm:text-6xl font-serif italic text-beige-500 leading-none">
+              {m.entry.year}
+            </span>
+          </div>
+
+          {/* Content column */}
+          <div class="sm:w-8/12 px-12 py-16 max-sm:px-8 max-sm:py-10 flex flex-col justify-center gap-4">
+            <h3 class="text-3xl max-sm:text-2xl font-light text-accent-dark">
+              {m.entry[`title_${lang}` as keyof typeof m.entry]}
+            </h3>
+            <p class="text-beige-700 leading-relaxed">
+              {m.entry[`desc_${lang}` as keyof typeof m.entry]}
+            </p>
+          </div>
+        </div>
+      );
+    })
+  }
+</section>
+
+<!-- Stats -->
+<section
+  id="aboutus-stats"
+  class="bg-accent-dark border-b-3 border-accent-dark px-8 py-24 max-sm:py-16"
+>
+  <div
+    class="grid grid-cols-3 max-sm:grid-cols-1 gap-12 max-sm:gap-10 max-w-4xl mx-auto"
+  >
+    <div class="stat-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+          data-target="23006">0</span
+        >
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">
+        {t("aboutus.stats.clients")}
+      </p>
+    </div>
+
+    <div class="stat-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+          data-target="4299">0</span
+        >
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">
+        {t("aboutus.stats.new")}
+      </p>
+    </div>
+
+    <div class="stat-item flex flex-col items-center text-center gap-3">
+      <div class="flex items-start gap-1">
+        <span
+          class="text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-none stat-count"
+          data-target="54">0</span
+        >
+      </div>
+      <p class="text-beige-700 text-xs uppercase tracking-widest">
+        {t("aboutus.stats.professionals")}
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="px-8 py-20 max-sm:py-14 flex justify-center aboutus-cta">
+  <Button href="tel:+12393188366" variant="dark" size="lg">
+    {t("aboutus.cta")} &rarr; (239) 318-8366
+  </Button>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+  gsap.registerPlugin(ScrollTrigger);
+
+  gsap.from(".aboutus-heading", {
+    opacity: 0,
+    y: 40,
+    duration: 1,
+    ease: "power3.out",
+  });
+
+  gsap.from(".aboutus-subtitle", {
+    opacity: 0,
+    y: 30,
+    duration: 0.8,
+    delay: 0.2,
+    ease: "power3.out",
+  });
+
+  gsap.from(".timeline-item", {
+    scrollTrigger: {
+      trigger: "#aboutus-timeline",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 50,
+    duration: 0.7,
+    stagger: 0.2,
+    ease: "power3.out",
+  });
+
+  gsap.from(".stat-item", {
+    scrollTrigger: {
+      trigger: "#aboutus-stats",
+      start: "top 80%",
+    },
+    opacity: 0,
+    y: 30,
+    duration: 0,
+    stagger: 0.15,
+    ease: "power3.out",
+  });
+
+  document.querySelectorAll<HTMLElement>(".stat-count").forEach((el) => {
+    const target = parseInt(el.dataset.target ?? "0");
+    const obj = { value: 0 };
+
+    gsap.to(obj, {
+      scrollTrigger: {
+        trigger: "#aboutus-stats",
+        start: "top 80%",
+      },
+      value: target,
+      duration: 0,
+      ease: "power2.out",
+      onUpdate() {
+        el.textContent = Math.floor(obj.value).toLocaleString();
+      },
+    });
+  });
+
+  gsap.from(".aboutus-cta", {
+    scrollTrigger: {
+      trigger: ".aboutus-cta",
+      start: "top 90%",
+    },
+    opacity: 0,
+    scale: 0.9,
+    duration: 0.6,
+    ease: "back.out(1.5)",
+  });
+</script>
