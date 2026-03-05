@@ -1,15 +1,18 @@
 ---
 import { getImage } from "astro:assets";
 import sunRay from "../../assets/sun-ray.png";
+import bhsLogoSmallDark from "../../assets/bhs-logo-small-light.png";
 import Button from "../ui/Button.astro";
 import { getLangFromUrl, useTranslations } from "../../i18n/utils";
 
 const optimizedSunRay = await getImage({ src: sunRay });
+const optimizedLogo = await getImage({ src: bhsLogoSmallDark });
 
 const lang = getLangFromUrl(Astro.url);
 const t = useTranslations(lang);
 
 const highlightText = t("hero.highlight");
+const titleBefore = t("hero.titleBefore");
 const titleText = t("hero.title");
 ---
 
@@ -17,14 +20,34 @@ const titleText = t("hero.title");
   <!-- Gradient overlay for depth & vignette -->
   <div class="hero-overlay absolute inset-0 z-10 pointer-events-none"></div>
 
+  <!-- Decorative logo parallax element -->
+  <div
+    id="hero-logo-parallax"
+    class="absolute right-0 top-1/2 -translate-y-1/2 w-screen h-screen opacity-10 pointer-events-none z-10"
+    style={`background-image: url('${optimizedLogo.src}'); background-size: contain; background-repeat: no-repeat; background-position: center right;`}
+  ></div>
+
+  <!-- Sun ray background (separate so opacity can be controlled independently) -->
   <div
     id="sun-ray"
-    class="w-full h-full flex flex-col justify-center items-start px-24 max-sm:px-8 max-sm:py-12 gap-24 max-sm:gap-12 relative z-20"
+    class="absolute inset-0 z-20 pointer-events-none"
     style={`background-image: url('${optimizedSunRay.src}'); background-size: cover; background-position: center;`}
-  >
+  ></div>
+
+  <!-- Hero content -->
+  <div class="w-full h-full flex flex-col justify-center items-start px-24 max-sm:px-8 max-sm:py-12 gap-24 max-sm:gap-12 relative z-30">
     <h1
-      class="text-8xl text-beige-500 font-light w-9/12 max-sm:text-5xl ease-text hero-headline"
+      class="text-8xl text-beige-300! font-light w-9/12 max-sm:text-5xl ease-text hero-headline"
     >
+      {titleBefore && (
+        <span class="hero-title-wrapper">
+          {titleBefore.split(" ").map((word: string) => (
+            <span class="hero-word inline-block overflow-hidden">
+              <span class="hero-word-inner inline-block">{word}&nbsp;</span>
+            </span>
+          ))}
+        </span>
+      )}
       <span class="hero-highlight text-9xl font-serif italic max-sm:text-6xl inline-block">
         {highlightText.split("").map((char: string) => (
           <span class="hero-char inline-block">{char === " " ? "\u00A0" : char}</span>
@@ -97,53 +120,88 @@ const titleText = t("hero.title");
 
 <script>
   import { gsap } from "gsap";
+  import { ScrollTrigger } from "gsap/ScrollTrigger";
+  gsap.registerPlugin(ScrollTrigger);
 
-  window.addEventListener("DOMContentLoaded", () => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+  // Entry timeline — plays once when hero section enters the viewport
+  const tl = gsap.timeline({ defaults: { ease: "power3.out" }, paused: true });
 
-    // 1. Character-split reveal on the highlight word
-    tl.to(".hero-char", {
-      opacity: 1,
-      duration: 0.05,
-      stagger: 0.06,
-    });
-
-    // 2. Staggered word reveal on the title
-    tl.to(
-      ".hero-word-inner",
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.8,
-        stagger: 0.08,
-        ease: "power4.out",
-      },
-      "-=0.2",
-    );
-
-    // 3. Button slide-up entrance
-    tl.to(
-      ".hero-button-wrapper button, .hero-button-wrapper a",
-      {
-        y: 0,
-        opacity: 1,
-        duration: 0.9,
-        ease: "back.out(1.7)",
-      },
-      "-=0.3",
-    );
+  // 1. Character-split reveal on the highlight word
+  tl.to(".hero-char", {
+    opacity: 1,
+    duration: 0.05,
+    stagger: 0.06,
   });
 
-  // Background zoom loop
+  // 2. Staggered word reveal on the title
+  tl.to(
+    ".hero-word-inner",
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.8,
+      stagger: 0.08,
+      ease: "power4.out",
+    },
+    "-=0.2",
+  );
+
+  // 3. Button slide-up entrance
+  tl.to(
+    ".hero-button-wrapper button, .hero-button-wrapper a",
+    {
+      y: 0,
+      opacity: 1,
+      duration: 0.9,
+      ease: "back.out(1.7)",
+    },
+    "-=0.3",
+  );
+
+  ScrollTrigger.create({
+    trigger: "#hero-section",
+    start: "top 80%",
+    once: true,
+    onEnter: () => tl.play(),
+  });
+
+  // Logo parallax on scroll
   gsap.fromTo(
+    "#hero-logo-parallax",
+    { y: 100, x: 100 },
+    {
+      y: -200,
+      ease: "none",
+      scrollTrigger: {
+        trigger: "#hero-section",
+        start: "top top",
+        end: "bottom top",
+        scrub: true,
+      },
+    },
+  );
+
+  // Background zoom loop — paused when hero section is out of view
+  const zoomAnim = gsap.fromTo(
     "#sun-ray",
-    { backgroundSize: "120% 140%" },
+    { backgroundSize: "120% 140%", opacity: 0.4 },
     {
       backgroundSize: "160% 100%",
       duration: 6,
       ease: "sine.inOut",
       repeat: -1,
       yoyo: true,
+      paused: true,
     },
   );
+
+  ScrollTrigger.create({
+    trigger: "#hero-section",
+    start: "top bottom",
+    end: "bottom top",
+    onEnter: () => zoomAnim.play(),
+    onLeave: () => zoomAnim.pause(),
+    onEnterBack: () => zoomAnim.play(),
+    onLeaveBack: () => zoomAnim.pause(),
+  });
 </script>
