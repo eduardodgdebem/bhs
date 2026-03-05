@@ -1,0 +1,48 @@
+---
+interface Props {
+  id: string;
+  bgText: string;
+  eyebrow: string;
+  heading: string;
+  subtitle: string;
+}
+
+const { id, bgText, eyebrow, heading, subtitle } = Astro.props;
+---
+
+<section
+  id={id}
+  class="page-hero relative bg-accent-dark border-b-3 border-accent-dark px-8 py-36 max-sm:py-24 text-center overflow-hidden"
+>
+  <span
+    class="absolute inset-0 flex items-center justify-center text-[22vw] font-serif italic text-beige-500 opacity-[0.04] select-none pointer-events-none leading-none"
+    aria-hidden="true">{bgText}</span
+  >
+  <p class="page-hero-eyebrow relative text-beige-700 text-xs uppercase tracking-[0.3em] mb-6">
+    {eyebrow}
+  </p>
+  <h1 class="page-hero-heading relative text-7xl max-sm:text-5xl font-serif italic text-beige-500 leading-tight">
+    {heading}
+  </h1>
+  <p class="page-hero-subtitle relative text-beige-700 mt-6 text-lg max-w-xl mx-auto">
+    {subtitle}
+  </p>
+</section>
+
+<script>
+  import { gsap } from "gsap";
+
+  // Scope to the last rendered hero so multiple instances don't collide
+  const hero = document.querySelector<HTMLElement>(".page-hero:last-of-type");
+  if (hero) {
+    const eyebrow = hero.querySelector(".page-hero-eyebrow");
+    const heading = hero.querySelector(".page-hero-heading");
+    const subtitle = hero.querySelector(".page-hero-subtitle");
+
+    window.addEventListener("load", () => {
+      gsap.from(eyebrow, { opacity: 0, y: 20, duration: 0.7, ease: "power3.out" });
+      gsap.from(heading, { opacity: 0, y: 40, duration: 1, delay: 0.15, ease: "power3.out" });
+      gsap.from(subtitle, { opacity: 0, y: 30, duration: 0.8, delay: 0.3, ease: "power3.out" });
+    });
+  }
+</script>

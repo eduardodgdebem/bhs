@@ -17,6 +17,7 @@ export const ui: Record<keyof typeof languages, any> = {
 
     // Hero
     "hero.highlight": "Brazilian",
+    "hero.titleBefore": "",
     "hero.title": "technique to bring out the best in you",
     "hero.cta": "Book your appointment",
 
@@ -107,6 +108,36 @@ export const ui: Record<keyof typeof languages, any> = {
       "Our four original units in the Criciúma region of Santa Catarina, where it all began — 25 years of transforming beauty across Brazil.",
     "units.brazil.footer": "Santa Catarina · Brazil",
 
+    // Services Page
+    "servicespage.heading": "Our Services",
+    "servicespage.subtitle": "Everything you need to look and feel your best — all under one roof.",
+    "servicespage.cta": "Book your appointment → (239) 318-8366",
+    "servicespage.cat1": "Hair",
+    "servicespage.cat2": "Makeup & Production",
+    "servicespage.cat3": "Nails",
+    "servicespage.s1.title": "Hair Coloring",
+    "servicespage.s1.items": ["Total Coloring", "Root Coloring", "Color Correction through Colorimetry", "Toning", "Camouflage of whites tone on tone"],
+    "servicespage.s2.title": "Highlights",
+    "servicespage.s2.items": ["Classic highlights", "Californian highlights", "White camouflage highlights", "Cap highlights", "Lightened brunettes"],
+    "servicespage.s3.title": "Straightening & Alignment",
+    "servicespage.s3.items": ["Progressive straightening", "Definitive straightening", "Botox alignment"],
+    "servicespage.s4.title": "Blow-Dry & Brushing",
+    "servicespage.s4.items": ["Straight blowout", "Curled blowout", "Baby Liss blowout"],
+    "servicespage.s5.title": "Hairstyles",
+    "servicespage.s5.items": ["Loose hairstyles", "Semi-updo hairstyles", "Fixed updo hairstyles"],
+    "servicespage.s6.title": "Haircut",
+    "servicespage.s6.items": ["Styling cut", "Maintenance cut", "Tip cleaning cut", "Fringe cut", "Kids cut"],
+    "servicespage.s7.title": "Treatments",
+    "servicespage.s7.items": ["Reconstruction, nutrition & hydration", "Hair Therapy Treatment", "Ozone Vapor Treatment"],
+    "servicespage.s8.title": "Hair Extensions",
+    "servicespage.s8.items": ["Hair extension", "Maintenance"],
+    "servicespage.s9.title": "Party Production",
+    "servicespage.s9.items": ["Bride's production", "Bridesmaid production", "Sweet Sixteen production", "Graduation production"],
+    "servicespage.s10.title": "Makeup",
+    "servicespage.s10.items": ["Social makeup", "Express makeup", "Lady makeup", "Children's makeup", "Eyelash placement"],
+    "servicespage.s11.title": "Manicure & Pedicure",
+    "servicespage.s11.items": ["Manicure", "Pedicure", "Gel nails", "Acrylic nails", "Foot spa", "Gel enameling"],
+
     // Footer
     "footer.tagline":
       "Modern Brazilian techniques to bring out the best in you. Four units in Brazil, now in Naples, Florida.",
@@ -127,7 +158,8 @@ export const ui: Record<keyof typeof languages, any> = {
 
     // Hero
     "hero.highlight": "Brasileira",
-    "hero.title": "técnica para revelar o melhor em você",
+    "hero.titleBefore": "técnica",
+    "hero.title": "para revelar o melhor em você",
     "hero.cta": "Agende seu horário",
 
     // About
@@ -217,6 +249,36 @@ export const ui: Record<keyof typeof languages, any> = {
       "Nossas quatro unidades originais na região de Criciúma, Santa Catarina, onde tudo começou — 25 anos transformando a beleza por todo o Brasil.",
     "units.brazil.footer": "Santa Catarina · Brasil",
 
+    // Services Page
+    "servicespage.heading": "Nossos Serviços",
+    "servicespage.subtitle": "Tudo que você precisa para se sentir e parecer o melhor de si — tudo em um só lugar.",
+    "servicespage.cta": "Agende seu horário → (239) 318-8366",
+    "servicespage.cat1": "Cabelo",
+    "servicespage.cat2": "Maquiagem e Produção",
+    "servicespage.cat3": "Unhas",
+    "servicespage.s1.title": "Coloração",
+    "servicespage.s1.items": ["Coloração Total", "Coloração na Raiz", "Correção de Cor por Colorimetria", "Tonalização", "Camuflagem de brancos tom sobre tom"],
+    "servicespage.s2.title": "Mechas",
+    "servicespage.s2.items": ["Mechas clássicas", "Mechas californianas", "Mechas de camuflagem", "Luzes no boné", "Morenas iluminadas"],
+    "servicespage.s3.title": "Alinhamento e Alisamento",
+    "servicespage.s3.items": ["Progressiva", "Alisamento Definitivo", "Alinhamento com Botox"],
+    "servicespage.s4.title": "Escovação",
+    "servicespage.s4.items": ["Escova Lisa", "Escova Modelada", "Baby Liss"],
+    "servicespage.s5.title": "Penteados",
+    "servicespage.s5.items": ["Penteado Solto", "Semi-Preso", "Preso"],
+    "servicespage.s6.title": "Corte",
+    "servicespage.s6.items": ["Corte de Estilo", "Corte de Manutenção", "Limpeza de Pontas", "Corte de Franja", "Corte Infantil"],
+    "servicespage.s7.title": "Tratamentos",
+    "servicespage.s7.items": ["Reconstrução, nutrição e hidratação", "Tratamento Hair Therapy", "Tratamento com Vapor de Ozônio"],
+    "servicespage.s8.title": "Extensão Capilar",
+    "servicespage.s8.items": ["Colocação de extensão", "Manutenção"],
+    "servicespage.s9.title": "Produção para Festas",
+    "servicespage.s9.items": ["Produção de Noiva", "Produção de Madrinha", "Produção de Debutante", "Produção de Formatura"],
+    "servicespage.s10.title": "Maquiagem",
+    "servicespage.s10.items": ["Maquiagem Social", "Maquiagem Express", "Maquiagem Lady", "Maquiagem Infantil", "Colocação de Cílios"],
+    "servicespage.s11.title": "Manicure e Pedicure",
+    "servicespage.s11.items": ["Manicure", "Pedicure", "Unhas em Gel", "Unhas Acrílicas", "Foot Spa", "Esmaltação em Gel"],
+
     // Footer
     "footer.tagline":
       "Técnicas brasileiras modernas para revelar o melhor em você. Quatro unidades no Brasil, agora em Naples, Flórida.",
@@ -237,7 +299,8 @@ export const ui: Record<keyof typeof languages, any> = {
 
     // Hero
     "hero.highlight": "Brasileña",
-    "hero.title": "técnica para sacar lo mejor de ti",
+    "hero.titleBefore": "técnica",
+    "hero.title": "para sacar lo mejor de ti",
     "hero.cta": "Reserva tu cita",
 
     // About
@@ -326,6 +389,36 @@ export const ui: Record<keyof typeof languages, any> = {
     "units.brazil.desc":
       "Nuestras cuatro unidades originales en la región de Criciúma, Santa Catarina, donde todo comenzó — 25 años transformando la belleza en todo Brasil.",
     "units.brazil.footer": "Santa Catarina · Brasil",
+
+    // Services Page
+    "servicespage.heading": "Nuestros Servicios",
+    "servicespage.subtitle": "Todo lo que necesitas para verte y sentirte en tu mejor versión — bajo un mismo techo.",
+    "servicespage.cta": "Reserva tu cita → (239) 318-8366",
+    "servicespage.cat1": "Cabello",
+    "servicespage.cat2": "Maquillaje y Producción",
+    "servicespage.cat3": "Uñas",
+    "servicespage.s1.title": "Coloración",
+    "servicespage.s1.items": ["Coloración Total", "Coloración en Raíz", "Corrección de Color por Colorimetría", "Tonalización", "Camuflaje de canas tono sobre tono"],
+    "servicespage.s2.title": "Mechas y Highlights",
+    "servicespage.s2.items": ["Mechas clásicas", "Mechas californianas", "Mechas de camuflaje", "Luces con gorro", "Morenas iluminadas"],
+    "servicespage.s3.title": "Alisado y Alineación",
+    "servicespage.s3.items": ["Alisado Progresivo", "Alisado Definitivo", "Alineación con Botox"],
+    "servicespage.s4.title": "Brushing",
+    "servicespage.s4.items": ["Brushing liso", "Brushing modelado", "Baby Liss"],
+    "servicespage.s5.title": "Peinados",
+    "servicespage.s5.items": ["Peinado suelto", "Semirecogido", "Recogido"],
+    "servicespage.s6.title": "Corte",
+    "servicespage.s6.items": ["Corte de Estilo", "Corte de Mantenimiento", "Limpieza de Puntas", "Corte de Flequillo", "Corte Infantil"],
+    "servicespage.s7.title": "Tratamientos",
+    "servicespage.s7.items": ["Reconstrucción, nutrición e hidratación", "Tratamiento Hair Therapy", "Tratamiento con Vapor de Ozono"],
+    "servicespage.s8.title": "Extensiones de Cabello",
+    "servicespage.s8.items": ["Colocación de extensión", "Mantenimiento"],
+    "servicespage.s9.title": "Producción para Fiestas",
+    "servicespage.s9.items": ["Producción de Novia", "Producción de Damas de Honor", "Producción de Quinceañera", "Producción de Graduación"],
+    "servicespage.s10.title": "Maquillaje",
+    "servicespage.s10.items": ["Maquillaje Social", "Maquillaje Express", "Maquillaje Lady", "Maquillaje Infantil", "Colocación de Pestañas"],
+    "servicespage.s11.title": "Manicura y Pedicura",
+    "servicespage.s11.items": ["Manicura", "Pedicura", "Uñas de Gel", "Uñas Acrílicas", "Foot Spa", "Esmaltado en Gel"],
 
     // Footer
     "footer.tagline":
